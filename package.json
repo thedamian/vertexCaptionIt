@@ -1,10 +1,9 @@
 {
-  "name": "vercelAICaptionIt",
+  "name": "AICaptionIt",
   "version": "1.0.0",
   "description": "",
-  "main": "vertexai.ts",
-  "type": "module",
-  "license": "AGPL-version-3.0",
+  "main": "aicaption.ts",
+  "license": "MIT",
   "private": false,
   "engines": {
     "node": ">= 14.0.0",
@@ -24,10 +23,23 @@
   },
   "contributors": [],
   "scripts": {
-    "dev": "",
+    "dev": "nodemon aicaption.ts",
+    "start": "node aicaption.js",
     "test": ""
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/uuid": "^9.0.7",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@google-cloud/aiplatform": "^3.9.0",
+    "@google-cloud/storage": "^7.7.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "openai": "^4.24.0"
   }
 }

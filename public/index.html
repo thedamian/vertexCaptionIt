@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> AI Image Caption It</title>
+</head>
+<body>
+    <h1>Hey AI.... Caption It</h1>
+    <form method="GET" id="form" >
+        <input type="file" id="fileInput" />
+        <input type="submit" value="Caption It" />
+        <div id="caption"></div>
+    </form>
+    <script>
+        let fileBase64 = "none"
+        document.getElementById("fileInput").onchange = (el) => {
+            let files = el
+            
+            
+            .target.files
+            if (files) {
+            const fileRef = files[0] || "" // sorry only the first file is uploaded
+            const fileType= fileRef.type || "" 
+            console.log("This file upload is of type:",fileType)
+            const reader = new FileReader()
+            reader.readAsBinaryString(fileRef)
+            reader.onload=(ev) => {
+                // convert it to base64
+                fileBase64 = `data:${fileType};base64,${btoa(ev.target.result)}`;
+            }
+            }
+        }
+
+        document.getElementById("form").onsubmit = (ev) => {
+            ev.preventDefault();
+            
+            fetch('/caption', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    file: fileBase64
+                })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('caption').innerHTML = data.error;
+                    return;
+                }
+
+                document.getElementById('caption').innerHTML = data.caption;
+            });
+            return false;
+        }
+
+    </script>
+</body>
+</html>
